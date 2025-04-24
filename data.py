@@ -2,7 +2,7 @@ import streamlit as st
 import hashlib
 import json
 import time
-from cryptography.fernet import fernet
+from cryptography.fernet import Fernet
 import base64
 
 # Initialize session state variables if they don't exist
@@ -40,7 +40,7 @@ def decrypt_data(encrypted_text, passkey, data_id):
         if data_id in st.session_state.stored_data and st.session_state.stored_data[data_id]["passkey"] == hashed_passkey:
             # If passkey matches, decrypt the data
             key = generate_key_from_passkey(passkey)
-            cipher = ferneternet(key)
+            cipher = fernet(key)
             decrypted = cipher.decrypt(encrypted_text.encode()).decode()
             st.session_state.failed_attempts = 0
             return decrypted
